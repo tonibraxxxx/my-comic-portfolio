@@ -1,70 +1,89 @@
-import Image from 'next/image';
+'use client';
+import { useState } from 'react';
 
+// REORDERED LIST: Bard/AI logo images should be last in this list
 const comics = [
-  const comics = [
-  { id: 1, title: "The Splash", src: "/streer.png", span: "row-span-2" },
-  { id: 2, title: "Character Profiles", src: "/page 1.png", span: "col-span-2" },
-  { id: 3, title: "Nairobi at Dawn", src: "/nairobi at dawn.png", span: "row-span-1" },
-  { id: 4, title: "One Term: Choices", src: "/one term.png", span: "col-span-2" },
-  { id: 5, title: "One Term: Job Done", src: "/job done.png", span: "col-span-2" },
+  { id: 1, title: "THE SPLASH", src: "/streer.png", chapter: "PAGE 01", description: "The beginning of the Nairobi Campus saga." },
+  { id: 2, title: "NAIROBI AT DAWN", src: "/nairobi at dawn.png", chapter: "PAGE 02", description: "The city wakes up to new choices." },
+  { id: 3, title: "POLITICAL CHOICES", src: "/one term.png", chapter: "PAGE 03", description: "The weight of the ballot." },
+  { id: 4, title: "THE EVALUATION", src: "/job done.png", chapter: "PAGE 04", description: "Looking back at the results." },
+  { id: 5, title: "CHARACTER PROFILES", src: "/page 1.png", chapter: "APPENDIX", description: "AI Generated Assets & Logos." }, // This usually has the logo/profiles
 ];
 
-export default function ComicGallery() {
-  return (
-    <main className="min-h-screen bg-black text-white p-4 md:p-8 font-sans">
-      {/* Header Section */}
-      <header className="max-w-6xl mx-auto mb-12 border-l-4 border-green-500 pl-6">
-        <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase italic leading-none">
-          SICK O'CLOCK <span className="text-green-500">STUDIOS</span>
-        </h1>
-        <p className="text-gray-400 mt-4 max-w-md italic text-lg uppercase tracking-widest">
-          Nairobi Campus Stories. 
-          <span className="block text-sm font-normal normal-case text-gray-500 mt-1">
-            Choices don't end at the ballot.
-          </span>
-        </p>
-      </header>
+export default function ComicReader() {
+  const [selectedImage, setSelectedImage] = useState(null);
 
-      {/* Grid Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        {comics.map((comic) => (
-          <div 
-            key={comic.id} 
-            className={`relative group overflow-hidden rounded-lg border border-gray-800 bg-gray-900 transition-all duration-500 hover:border-green-500 shadow-2xl ${comic.span}`}
-          >
-            {/* The Image */}
-            <img
-              src={comic.src}
-              alt={comic.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 min-h-[300px]"
-            />
-            
-            {/* Dark Overlay for Text Readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-            
-            {/* Text Overlay */}
-            <div className="absolute bottom-0 left-0 p-6">
-              <p className="text-[10px] text-green-500 font-black tracking-[0.2em] mb-1">
-                SICK O'CLOCK EXCLUSIVE
-              </p>
-              <h3 className="text-2xl font-bold uppercase tracking-tight text-white italic">
-                {comic.title}
-              </h3>
-            </div>
+  return (
+    <main className="min-h-screen bg-[#0a0a0a] text-white font-sans">
+      {/* Comic Web Top Bar */}
+      <nav className="p-4 border-b border-green-500/30 sticky top-0 bg-black/90 backdrop-blur-md z-40">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-1 bg-green-500"></div>
+            <h1 className="text-2xl font-black italic tracking-tighter uppercase">
+              SICK O'CLOCK <span className="text-green-500">STUDIOS</span>
+            </h1>
           </div>
+          <div className="text-[10px] font-bold bg-green-500 text-black px-2 py-1 rounded italic uppercase">
+            Live Reader
+          </div>
+        </div>
+      </nav>
+
+      {/* Comic Reader Feed */}
+      <div className="max-w-3xl mx-auto p-4 py-10 space-y-16">
+        {comics.map((comic) => (
+          <article key={comic.id} className="flex flex-col">
+            {/* Small Bold Header like Comic Webs */}
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[10px] font-extrabold text-green-500 uppercase tracking-widest bg-green-500/10 px-2 py-0.5 rounded">
+                {comic.chapter}
+              </span>
+              <h2 className="text-xs font-bold text-gray-400 uppercase tracking-tighter">
+                {comic.title}
+              </h2>
+            </div>
+
+            {/* Large Readable Image */}
+            <div 
+              className="relative cursor-zoom-in border border-gray-800 rounded shadow-2xl transition-all hover:border-green-500/50"
+              onClick={() => setSelectedImage(comic.src)}
+            >
+              <img 
+                src={comic.src} 
+                alt={comic.title}
+                className="w-full h-auto block rounded"
+              />
+            </div>
+            
+            <p className="mt-4 text-sm text-gray-500 italic text-center leading-relaxed">
+              {comic.description}
+            </p>
+          </article>
         ))}
       </div>
 
-      {/* Footer Section */}
-      <footer className="mt-20 py-10 border-t border-gray-900 text-center">
-        <p className="text-gray-600 text-[10px] uppercase tracking-[0.4em]">
-          Created by Tonibraxxx &copy; 2026
-        </p>
-        <div className="flex justify-center gap-4 mt-4 opacity-50">
-          <span className="h-1 w-1 bg-green-500 rounded-full"></span>
-          <span className="h-1 w-1 bg-green-500 rounded-full"></span>
-          <span className="h-1 w-1 bg-green-500 rounded-full"></span>
+      {/* Full-Screen Zoom Overlay */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/98 flex items-center justify-center p-2 cursor-zoom-out"
+          onClick={() => setSelectedImage(null)}
+        >
+          <img 
+            src={selectedImage} 
+            className="max-h-full max-w-full object-contain animate-in fade-in zoom-in-95 duration-200"
+            alt="Expanded View"
+          />
+          <div className="absolute top-5 right-5 text-gray-500 text-sm font-bold uppercase tracking-widest">
+            Click anywhere to close
+          </div>
         </div>
+      )}
+
+      <footer className="p-20 text-center border-t border-gray-900 bg-black">
+        <p className="text-[9px] text-gray-600 tracking-[0.6em] uppercase font-black italic">
+          TONIBRAXXX &copy; 2026 | SICK O'CLOCK PRODUCTION
+        </p>
       </footer>
     </main>
   );
