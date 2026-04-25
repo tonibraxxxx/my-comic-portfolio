@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 const comics = [
+  const comics = [
   { id: 1, title: "The Splash", src: "/streer.png", span: "row-span-2" },
   { id: 2, title: "Character Profiles", src: "/page 1.png", span: "col-span-2" },
   { id: 3, title: "Nairobi at Dawn", src: "/nairobi at dawn.png", span: "row-span-1" },
